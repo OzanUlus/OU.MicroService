@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36203.30 d17.14
+VisualStudioVersion = 17.14.36203.30
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -12,6 +12,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OU.MicroService.Catalog.Api", "OU.MicroService.Catalog.Api\OU.MicroService.Catalog.Api.csproj", "{0E66A268-6DBC-497C-9EDD-C42CEAAB8B86}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{81DDED9D-158B-E303-5F62-77A2896D2A5A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{91399471-8CA0-4FAD-A9FB-242D667F93C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OU.Microservice.Shared", "OU.Microservice.Shared\OU.Microservice.Shared.csproj", "{31E4D5F6-54D5-44E0-A32D-79AA8EAD6C63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,10 @@ Global
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31E4D5F6-54D5-44E0-A32D-79AA8EAD6C63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31E4D5F6-54D5-44E0-A32D-79AA8EAD6C63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31E4D5F6-54D5-44E0-A32D-79AA8EAD6C63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31E4D5F6-54D5-44E0-A32D-79AA8EAD6C63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -35,6 +43,8 @@ Global
 		{A9983877-7A3F-4556-8510-BC59B7CDA4DB} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{1910A9FF-7C0E-4F30-8C89-811A8BE4FE7A} = {A9983877-7A3F-4556-8510-BC59B7CDA4DB}
 		{0E66A268-6DBC-497C-9EDD-C42CEAAB8B86} = {1910A9FF-7C0E-4F30-8C89-811A8BE4FE7A}
+		{91399471-8CA0-4FAD-A9FB-242D667F93C7} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{31E4D5F6-54D5-44E0-A32D-79AA8EAD6C63} = {91399471-8CA0-4FAD-A9FB-242D667F93C7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7AD30C4E-BFED-422F-82AA-37EDC849B9C5}
