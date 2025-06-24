@@ -1,6 +1,7 @@
 ﻿using OU.MicroService.Catalog.Api.Features.Categories.Create;
 using OU.MicroService.Catalog.Api.Features.Categories.GetAll;
 using OU.MicroService.Catalog.Api.Features.Categories.GetById;
+using OU.MicroService.Catalog.Api.Features.Categories.Update;
 
 namespace OU.MicroService.Catalog.Api.Features.Categories
 {
@@ -12,7 +13,8 @@ namespace OU.MicroService.Catalog.Api.Features.Categories
             app.MapGroup("api/categories")
                 .CreateCategoryGroupItemEndpoint()
                 .GetAllCategoryGroupItemEndpoint()
-                .GetByIdCategoryGroupItemEndpoint();
+                .GetByIdCategoryGroupItemEndpoint()
+                .UpdateCategoryGroupItemEndpoint();
 
 
         }

@@ -3,12 +3,11 @@ using MediatR;
 using OU.Microservice.Shared;
 using OU.Microservice.Shared.Extensions;
 using OU.MicroService.Catalog.Api.Features.Categories.Dtos;
-using OU.MicroService.Catalog.Api.Features.Categories.GetAll;
 using OU.MicroService.Catalog.Api.Repositories;
 
 namespace OU.MicroService.Catalog.Api.Features.Categories.GetById
 {
-    public record GetCategoryByIdQuery(Guid Id) : IRequest<ServiceResult<CategoryDto>>;
+    public record GetCategoryByIdQuery(Guid Id) : IRequestByServiceResult<CategoryDto>;
     
 
     public class GetCategoryByIdQueryHandler(AppDbContext context) : IRequestHandler<GetCategoryByIdQuery, ServiceResult<CategoryDto>>
