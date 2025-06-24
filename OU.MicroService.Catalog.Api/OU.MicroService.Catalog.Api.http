@@ -1,6 +1,20 @@
-@OU.MicroService.Catalog.Api_HostAddress = http://localhost:5019
+@baseAddress = http://localhost:5019
 
-GET {{OU.MicroService.Catalog.Api_HostAddress}}/weatherforecast/
+GET {{baseAddress}}/api/categories
+Accept: application/json
+
+###
+
+POST {{baseAddress}}/api/categories
+Accept: application/json
+Content-Type: application/json
+{
+  "name": "Deneme5"
+}
+
+###
+
+GET {{baseAddress}}/api/categories/08ddb299-5953-6f19-2e3b-70fc77270000
 Accept: application/json
 
 ###
