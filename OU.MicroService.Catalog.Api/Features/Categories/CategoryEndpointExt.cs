@@ -1,4 +1,5 @@
-﻿using OU.MicroService.Catalog.Api.Features.Categories.Create;
+﻿using OU.Microservice.Shared.Filters;
+using OU.MicroService.Catalog.Api.Features.Categories.Create;
 
 namespace OU.MicroService.Catalog.Api.Features.Categories
 {

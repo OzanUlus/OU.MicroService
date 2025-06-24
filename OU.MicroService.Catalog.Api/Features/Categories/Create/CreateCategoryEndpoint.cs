@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using OU.Microservice.Shared.Extensions;
+using OU.Microservice.Shared.Filters;
 
 namespace OU.MicroService.Catalog.Api.Features.Categories.Create
 {
@@ -8,7 +9,7 @@ namespace OU.MicroService.Catalog.Api.Features.Categories.Create
         public static RouteGroupBuilder CreateCategoryGroupItemEndpoint(this RouteGroupBuilder group) 
         {
 
-            group.MapPost("/", async (CreateCategoryCommand comand, IMediator mediator) => (await mediator.Send(comand)).ToGenericResult());
+            group.MapPost("/", async (CreateCategoryCommand comand, IMediator mediator) => (await mediator.Send(comand)).ToGenericResult()).AddEndpointFilter<ValidationFilter<CreateCategoryCommand>>();
 
             return group;
 
