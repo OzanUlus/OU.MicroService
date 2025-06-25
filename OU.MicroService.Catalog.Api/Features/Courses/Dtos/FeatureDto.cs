@@ -1,9 +1,10 @@
-﻿namespace OU.MicroService.Catalog.Api.Features.Courses
+﻿namespace OU.MicroService.Catalog.Api.Features.Courses.Dtos
 {
-    public class Feature
+    public class FeatureDto
     {
         public int Duration { get; set; }
         public float Rating { get; set; }
+
         public string EducatorFullName { get; set; } = default!;
     }
 }

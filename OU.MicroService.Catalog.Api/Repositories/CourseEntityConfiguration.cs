@@ -17,7 +17,7 @@ namespace OU.MicroService.Catalog.Api.Repositories
             builder.Property(c => c.Created).HasElementName("created");
             builder.Property(c => c.UserId).HasElementName("userId");
             builder.Property(c => c.CategoryId).HasElementName("categoryId");
-            builder.Property(c => c.Picture).HasElementName("picture");
+            builder.Property(c => c.ImageUrl).HasElementName("imageUrl").HasMaxLength(200);
             builder.Ignore(c => c.Category);
 
 
@@ -25,7 +25,7 @@ namespace OU.MicroService.Catalog.Api.Repositories
             {
                 feature.HasElementName("feature");
                 feature.Property(f => f.Duration).HasElementName("duration");
-                feature.Property(f => f.Racing).HasElementName("racing");
+                feature.Property(f => f.Rating).HasElementName("racing");
                 feature.Property(f => f.EducatorFullName).HasElementName("educatorFullName");
 
             });

@@ -9,7 +9,7 @@ namespace OU.MicroService.Catalog.Api.Features.Categories.Create
         public static RouteGroupBuilder CreateCategoryGroupItemEndpoint(this RouteGroupBuilder group) 
         {
 
-            group.MapPost("/", async (CreateCategoryCommand comand, IMediator mediator) => (await mediator.Send(comand)).ToGenericResult()).AddEndpointFilter<ValidationFilter<CreateCategoryCommand>>();
+            group.MapPost("/", async (CreateCategoryCommand comand, IMediator mediator) => (await mediator.Send(comand)).ToGenericResult()).WithName("CreateCategory").AddEndpointFilter<ValidationFilter<CreateCategoryCommand>>();
 
             return group;
 
