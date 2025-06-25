@@ -24,7 +24,7 @@ namespace OU.MicroService.Catalog.Api.Features.Categories.Delete
         public static RouteGroupBuilder DeleteCategoryGroupItemEndpoint(this RouteGroupBuilder group)
         {
 
-            group.MapDelete("/{id:guid}", async (IMediator mediator, Guid id) => (await mediator.Send(new DeleteCategoryCommand(id)))).WithName("DeleteCategory");
+            group.MapDelete("/{id:guid}", async (IMediator mediator, Guid id) => (await mediator.Send(new DeleteCategoryCommand(id)))).WithName("DeleteCategory").MapToApiVersion(1, 0);
 
             return group;
 

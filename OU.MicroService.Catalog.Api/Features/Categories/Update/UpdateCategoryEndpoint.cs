@@ -9,7 +9,7 @@ namespace OU.MicroService.Catalog.Api.Features.Categories.Update
         public static RouteGroupBuilder UpdateCategoryGroupItemEndpoint(this RouteGroupBuilder group)
         {
 
-            group.MapPut("/{id:guid}", async (UpdateCategoryCommand comand, IMediator mediator, Guid id) => (await mediator.Send(comand)).ToGenericResult()).WithName("UpdateCategory").AddEndpointFilter<ValidationFilter<UpdateCategoryCommand>>();
+            group.MapPut("/{id:guid}", async (UpdateCategoryCommand comand, IMediator mediator, Guid id) => (await mediator.Send(comand)).ToGenericResult()).WithName("UpdateCategory").MapToApiVersion(1, 0).AddEndpointFilter<ValidationFilter<UpdateCategoryCommand>>();
 
             return group;
 

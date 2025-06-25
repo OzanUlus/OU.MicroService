@@ -45,7 +45,7 @@ namespace OU.MicroService.Catalog.Api.Features.Courses.GetAllByUserId
                         async (IMediator mediator, Guid userId) =>
                             (await mediator.Send(new GetCourseByUserIdQuery(userId))).ToGenericResult())
                     .WithName("GetByUserIdCourses")
-                    /*.MapToApiVersion(1, 0)*/;
+                    .MapToApiVersion(1, 0);
 
                 return group;
             }
