@@ -1,6 +1,7 @@
 ﻿using OU.MicroService.Catalog.Api.Features.Courses.Create;
 using OU.MicroService.Catalog.Api.Features.Courses.Delete;
 using OU.MicroService.Catalog.Api.Features.Courses.GetAll;
+using OU.MicroService.Catalog.Api.Features.Courses.GetAllByUserId.OU.MicroService.Catalog.Api.Features.Courses.getal;
 using OU.MicroService.Catalog.Api.Features.Courses.GetById;
 using OU.MicroService.Catalog.Api.Features.Courses.Update;
 
@@ -15,7 +16,8 @@ namespace OU.MicroService.Catalog.Api.Features.Courses
                 .GetAllCourseGroupItemEndpoint()
                 .GetByIdCourseGroupItemEndpoint()
                 .UpdateCourseGroupItemEndpoint()
-                .DeleteCourseGroupItemEndpoint();
+                .DeleteCourseGroupItemEndpoint()
+                .GetByUserIdCourseGroupItemEndpoint();
         }
     }
 }
