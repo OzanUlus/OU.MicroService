@@ -1,5 +1,6 @@
 using OU.Microservice.Shared.Extensions;
 using OU.MicroService.Basket.Api;
+using OU.MicroService.Basket.Api.Features.Basket;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,12 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddCommonServiceExt(typeof(BasketAssembly));
+builder.Services.AddStackExchangeRedisCache(opt => {
+
+    opt.Configuration = builder.Configuration.GetConnectionString("Redis");
+
+});
+builder.Services.AddVersioningExt();
 
 var app = builder.Build();
 
@@ -19,7 +26,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
+app.AddBasketGroupEndpointExt(app.AddVersionSetExt());
 
 app.Run();
 
