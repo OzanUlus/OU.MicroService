@@ -1,29 +1,25 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Caching.Distributed;
 using OU.Microservice.Shared;
 using OU.Microservice.Shared.Services;
-using OU.MicroService.Basket.Api.Const;
-using OU.MicroService.Basket.Api.Dtos;
 using System.Net;
 using System.Text.Json;
 
 namespace OU.MicroService.Basket.Api.Features.Basket.DeleteBasketItem
 {
-    public class DeleteBasketItemCommandHandler(IDistributedCache distributedCache, IIdentityService identityService) : IRequestHandler<DeleteBasketItemCommand, ServiceResult>
+    public class DeleteBasketItemCommandHandler(BasketService basketService) : IRequestHandler<DeleteBasketItemCommand, ServiceResult>
     {
         public async Task<ServiceResult> Handle(DeleteBasketItemCommand request, CancellationToken cancellationToken)
         {
-            var userId = identityService.GetUserId;
-            var cacheKey = string.Format(ConstBasket.BasketCacheKey, userId);
+            
 
-            var basketAsString = await distributedCache.GetStringAsync(cacheKey, token:cancellationToken);
+            var basketAsJson = await basketService.GetBasketFromCache(cancellationToken);
 
-            if(string.IsNullOrEmpty(basketAsString))
+            if(string.IsNullOrEmpty(basketAsJson))
             {
                 return ServiceResult.Error("Basket not found", System.Net.HttpStatusCode.NotFound);
             }
 
-            var currentBasket = JsonSerializer.Deserialize<BasketDto>(basketAsString);
+            var currentBasket = JsonSerializer.Deserialize<Data.Basket>(basketAsJson);
 
             var basketItemToDelete = currentBasket!.BasketItems.FirstOrDefault(x => x.Id == request.Id);
 
@@ -34,9 +30,9 @@ namespace OU.MicroService.Basket.Api.Features.Basket.DeleteBasketItem
 
             currentBasket.BasketItems.Remove(basketItemToDelete);
 
-            basketAsString = JsonSerializer.Serialize(currentBasket);
+            basketAsJson = JsonSerializer.Serialize(currentBasket);
 
-            await distributedCache.SetStringAsync(cacheKey, basketAsString, token:cancellationToken);
+            await basketService.CreateBasketCacheAsync(currentBasket,cancellationToken);
 
 
             return ServiceResult.SuccessAsNoContent();

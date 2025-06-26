@@ -16,6 +16,7 @@ builder.Services.AddStackExchangeRedisCache(opt => {
 
 });
 builder.Services.AddVersioningExt();
+builder.Services.AddScoped<BasketService>();
 
 var app = builder.Build();
 
