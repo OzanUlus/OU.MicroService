@@ -1,5 +1,6 @@
 using OU.Microservice.Shared.Extensions;
 using OU.MicroService.Discount.Api;
+using OU.MicroService.Discount.Api.Features.Courses;
 using OU.MicroService.Discount.Api.Options;
 using OU.MicroService.Discount.Api.Repositories;
 
@@ -25,7 +26,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-
+app.AddDiscountGroupEndpointExt(app.AddVersionSetExt());
 
 app.Run();
 
