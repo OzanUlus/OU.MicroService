@@ -1,0 +1,6 @@
+@OU.Microservice.PAyment.Api_HostAddress = http://localhost:5198
+
+GET {{OU.Microservice.PAyment.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
