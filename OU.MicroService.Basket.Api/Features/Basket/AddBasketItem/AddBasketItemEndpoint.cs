@@ -13,7 +13,7 @@ namespace OU.MicroService.Basket.Api.Features.Basket.AddBasketItem
             group.MapPost("/item", async (AddBasketItemCommand comand, IMediator mediator) => (await mediator.Send(comand)).ToGenericResultToResult())
                 .WithName("AddBasketItem")
                   .MapToApiVersion(1, 0)
-                .AddEndpointFilter<ValidationFilter<AddBasketItemCommandValidator>>();
+                .AddEndpointFilter<ValidationFilter<AddBasketItemCommand>>();
 
             return group;
 
