@@ -13,7 +13,7 @@ namespace OU.Microservice.Payment.Api.Features.Payments.GetAllPaymentsByUserId
             GetAllPaymentsByUserIdQuery request,
             CancellationToken cancellationToken)
         {
-            var userId = identityService.GetUserId;
+            var userId = identityService.UserId;
 
             var payments = await context.Payments
                 .Where(x => x.UserId == userId)

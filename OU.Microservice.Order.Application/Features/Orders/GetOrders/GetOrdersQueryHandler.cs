@@ -12,7 +12,7 @@ namespace OU.Microservice.Order.Application.Features.Orders.GetOrders
     {
         public async Task<ServiceResult<List<GetOrdersResponse>>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
         {
-            var orders = await orderRepository.GetOrderByBuyerId(identityService.GetUserId);
+            var orders = await orderRepository.GetOrderByBuyerId(identityService.UserId);
 
 
             var response = orders

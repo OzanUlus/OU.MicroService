@@ -7,7 +7,7 @@ namespace OU.MicroService.Basket.Api.Features.Basket
 {
     public class BasketService(IIdentityService identityService, IDistributedCache distributedCache)
     {
-        private string GetCacheKey() => string.Format(ConstBasket.BasketCacheKey, identityService.GetUserId);
+        private string GetCacheKey() => string.Format(ConstBasket.BasketCacheKey, identityService.UserId);
 
         public Task<string?> GetBasketFromCache(CancellationToken cancellationToken)
         {

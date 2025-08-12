@@ -22,7 +22,7 @@ namespace OU.MicroService.Basket.Api.Features.Basket.AddBasketItem
             if (string.IsNullOrEmpty(basketAsJson))
             {
 
-                currentBasket = new Data.Basket(identityService.GetUserId, [newBasketItem]);
+                currentBasket = new Data.Basket(identityService.UserId, [newBasketItem]);
 
                 await basketService.CreateBasketCacheAsync(currentBasket,cancellationToken);
 

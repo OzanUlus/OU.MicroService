@@ -5,12 +5,14 @@ using OU.Microservice.Shared.Services;
 
 namespace OU.Microservice.Payment.Api.Features.Payments.Create
 {
-    public class CreatePaymentCommandHandler(AppDbContext appDbContext, IIdentityService idenIdentityService, IHttpContextAccessor httpContextAccessor)
+    public class CreatePaymentCommandHandler(AppDbContext appDbContext, IIdentityService identityService, IHttpContextAccessor httpContextAccessor)
         : IRequestHandler<CreatePaymentCommand, ServiceResult<Guid>>
     {
         public async Task<ServiceResult<Guid>> Handle(CreatePaymentCommand request, CancellationToken cancellationToken)
         {
-            var claims = httpContextAccessor.HttpContext.User.Claims;
+            var userId = identityService.UserId;
+            var userName = identityService.UserName;
+            var roles = identityService.Roles;
 
             var (isSuccess, errorMessage) = await ExternalPaymentProcessAsync(request.CardNumber,
                 request.CardHolderName,
@@ -23,7 +25,7 @@ namespace OU.Microservice.Payment.Api.Features.Payments.Create
             }
 
 
-            var userId = idenIdentityService.GetUserId;
+            
             var newPayment = new Repositories.Payment(userId, request.OrderCode, request.Amount);
             newPayment.SetStatus(Repositories.PaymentStatus.Success);
 
