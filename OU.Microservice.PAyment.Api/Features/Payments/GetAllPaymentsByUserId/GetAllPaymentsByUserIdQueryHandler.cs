@@ -4,7 +4,7 @@ using OU.Microservice.Payment.Api.Repositories;
 using OU.Microservice.Shared;
 using OU.Microservice.Shared.Services;
 
-namespace OU.Microservice.Payment.Api.Features.GetAllPaymentsByUserId
+namespace OU.Microservice.Payment.Api.Features.Payments.GetAllPaymentsByUserId
 {
     public class GetAllPaymentsByUserIdQueryHandler(AppDbContext context, IIdentityService identityService)
         : IRequestHandler<GetAllPaymentsByUserIdQuery, ServiceResult<List<GetAllPaymentsByUserIdResponse>>>

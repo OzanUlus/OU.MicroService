@@ -1,6 +1,6 @@
 ﻿using OU.Microservice.Payment.Api.Repositories;
 
-namespace OU.Microservice.Payment.Api.Features.GetAllPaymentsByUserId
+namespace OU.Microservice.Payment.Api.Features.Payments.GetAllPaymentsByUserId
 {
     public record GetAllPaymentsByUserIdResponse(
         Guid Id,

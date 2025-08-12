@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OU.Microservice.Shared.Extensions;
 
-namespace OU.Microservice.Payment.Api.Features.GetAllPaymentsByUserId
+namespace OU.Microservice.Payment.Api.Features.Payments.GetAllPaymentsByUserId
 {
     public static class GetAllPaymentsByUserIdEndpoint
     {
