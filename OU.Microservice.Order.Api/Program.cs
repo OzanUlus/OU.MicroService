@@ -26,6 +26,7 @@ builder.Services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericReposito
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddVersioningExt();
+builder.Services.AddAuthenticationAndAuthorizationExt(builder.Configuration);
 
 var app = builder.Build();
 
@@ -38,6 +39,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.AddOrderGroupEndpointExt(app.AddVersionSetExt());
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 
 app.Run();

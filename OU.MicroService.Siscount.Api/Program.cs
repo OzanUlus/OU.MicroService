@@ -14,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddOptionsExt();
 builder.Services.AddDatabaseServiceExt();
 builder.Services.AddCommonServiceExt(typeof(DiscountAssembly));
+builder.Services.AddAuthenticationAndAuthorizationExt(builder.Configuration);
 builder.Services.AddVersioningExt();
 
 var app = builder.Build();
@@ -27,6 +28,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.AddDiscountGroupEndpointExt(app.AddVersionSetExt());
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
 
