@@ -53,6 +53,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gateway", "gateway", "{41F9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OU.MicroService.Gateway", "OU.MicroService.Gateway\OU.MicroService.Gateway.csproj", "{B0C0BE2A-2ECC-43FA-BD1E-12E2BE55FECD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OU.Microservice.Bus", "OU.Microservice.Bus\OU.Microservice.Bus.csproj", "{06970389-A846-41C0-9976-E6AB01D09CD9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,10 @@ Global
 		{B0C0BE2A-2ECC-43FA-BD1E-12E2BE55FECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0C0BE2A-2ECC-43FA-BD1E-12E2BE55FECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0C0BE2A-2ECC-43FA-BD1E-12E2BE55FECD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06970389-A846-41C0-9976-E6AB01D09CD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06970389-A846-41C0-9976-E6AB01D09CD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06970389-A846-41C0-9976-E6AB01D09CD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06970389-A846-41C0-9976-E6AB01D09CD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -135,6 +141,7 @@ Global
 		{D5F30E3A-67CA-4395-9A38-3872049380B8} = {2CA8BC54-2407-4AC0-B141-7FAF30BF0AD1}
 		{41F98F38-939E-4EA1-B054-399EC4BA4FEC} = {A9983877-7A3F-4556-8510-BC59B7CDA4DB}
 		{B0C0BE2A-2ECC-43FA-BD1E-12E2BE55FECD} = {41F98F38-939E-4EA1-B054-399EC4BA4FEC}
+		{06970389-A846-41C0-9976-E6AB01D09CD9} = {91399471-8CA0-4FAD-A9FB-242D667F93C7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7AD30C4E-BFED-422F-82AA-37EDC849B9C5}

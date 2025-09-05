@@ -33,7 +33,7 @@ namespace OU.MicroService.Catalog.Api.Features.Courses.Create
 
             var newCourse = request.Adapt<Course>();
             newCourse.Created = DateTime.Now;
-            newCourse.Id = NewId.NextSequentialGuid(); // index performance
+            newCourse.Id = Guid.CreateVersion7(); // index performance
             newCourse.Feature = new Feature()
             {
                 Duration = 10, // calculate by course video

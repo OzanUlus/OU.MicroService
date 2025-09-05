@@ -17,7 +17,7 @@ namespace OU.MicroService.Catalog.Api.Features.Categories.Create
                 ServiceResult<CreateCategoryResponse>.Error("Category Name already exists", $"The category name '{request.Name}' already exists", System.Net.HttpStatusCode.BadRequest);
             }
 
-            Category category = new Category { Name = request.Name, Id = NewId.NextSequentialGuid() };
+            Category category = new Category { Name = request.Name, Id = Guid.CreateVersion7() };
 
             await context.Categories.AddAsync(category, cancellationToken);   
             await context.SaveChangesAsync(cancellationToken);
