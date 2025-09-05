@@ -1,3 +1,4 @@
+using OU.Microservice.Bus;
 using OU.Microservice.Shared.Extensions;
 using OU.MicroService.Catalog.Api;
 using OU.MicroService.Catalog.Api.Features.Categories;
@@ -14,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddOptionsExt();
 builder.Services.AddDatabaseServiceExt();
 builder.Services.AddCommonServiceExt(typeof(CatalogAssembly));
+builder.Services.AddCommonMasstransitExt(builder.Configuration);
 builder.Services.AddVersioningExt();
 builder.Services.AddAuthenticationAndAuthorizationExt(builder.Configuration);
 

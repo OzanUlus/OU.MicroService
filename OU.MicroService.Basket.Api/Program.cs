@@ -1,3 +1,4 @@
+using OU.Microservice.Bus;
 using OU.Microservice.Shared.Extensions;
 using OU.MicroService.Basket.Api;
 using OU.MicroService.Basket.Api.Features.Basket;
@@ -10,6 +11,7 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddCommonServiceExt(typeof(BasketAssembly));
+builder.Services.AddCommonMasstransitExt(builder.Configuration);
 builder.Services.AddStackExchangeRedisCache(opt => {
 
     opt.Configuration = builder.Configuration.GetConnectionString("Redis");

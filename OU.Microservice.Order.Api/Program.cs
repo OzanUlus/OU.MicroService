@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using OU.Microservice.Bus;
 using OU.Microservice.Order.Application;
 using OU.Microservice.Order.Application.Contracts.Repositories;
 using OU.Microservice.Order.Application.Contracts.UnitOfWork;
@@ -21,6 +22,7 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 });
 
 builder.Services.AddCommonServiceExt(typeof(OrderApplicationAssembly));
+builder.Services.AddCommonMasstransitExt(builder.Configuration);
 
 builder.Services.AddScoped(typeof(IGenericRepository<,>), typeof(GenericRepository<,>));
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();

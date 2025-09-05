@@ -1,3 +1,4 @@
+using OU.Microservice.Bus;
 using OU.Microservice.Shared.Extensions;
 using OU.MicroService.Discount.Api;
 using OU.MicroService.Discount.Api.Features.Courses;
@@ -14,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddOptionsExt();
 builder.Services.AddDatabaseServiceExt();
 builder.Services.AddCommonServiceExt(typeof(DiscountAssembly));
+builder.Services.AddCommonMasstransitExt(builder.Configuration);
 builder.Services.AddAuthenticationAndAuthorizationExt(builder.Configuration);
 builder.Services.AddVersioningExt();
 

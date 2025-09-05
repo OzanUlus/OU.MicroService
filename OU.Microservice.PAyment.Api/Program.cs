@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using OU.Microservice.Bus;
 using OU.Microservice.Payment.Api.Features;
 using OU.Microservice.Payment.Api.Repositories;
 using OU.Microservice.PAyment.Api;
@@ -12,6 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddCommonServiceExt(typeof(PaymentAssembly));
+builder.Services.AddCommonMasstransitExt(builder.Configuration);
 builder.Services.AddVersioningExt();
 builder.Services.AddDbContext<AppDbContext>(opt =>
 {
