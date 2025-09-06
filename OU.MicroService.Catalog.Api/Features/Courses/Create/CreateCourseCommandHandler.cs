@@ -2,13 +2,14 @@
 using MassTransit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using OU.Microservice.Bus.Commands;
 using OU.Microservice.Shared;
 using OU.MicroService.Catalog.Api.Repositories;
 using System.Net;
 
 namespace OU.MicroService.Catalog.Api.Features.Courses.Create
 {
-    public class CreateCourseCommandHandler(AppDbContext context) : IRequestHandler<CreateCourseCommand, ServiceResult<Guid>>
+    public class CreateCourseCommandHandler(AppDbContext context, IPublishEndpoint publishEndpoint) : IRequestHandler<CreateCourseCommand, ServiceResult<Guid>>
     {
         public async Task<ServiceResult<Guid>> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
         {
@@ -43,6 +44,18 @@ namespace OU.MicroService.Catalog.Api.Features.Courses.Create
 
             context.Courses.Add(newCourse);
             await context.SaveChangesAsync(cancellationToken);
+
+            if(request.Picture is not null)
+            {
+                using var stream = new MemoryStream();
+                
+                  await request.Picture.CopyToAsync(stream, cancellationToken);
+                  var pictureAsByteArray = stream.ToArray();
+
+                var uploadCoursePictureCommand = new UploadCoursePictureCommand(newCourse.Id, pictureAsByteArray);
+                await publishEndpoint.Publish(uploadCoursePictureCommand, cancellationToken);
+
+            }
 
             return ServiceResult<Guid>.SuccessAsCreated(newCourse.Id, $"/api/courses/{newCourse.Id}");
         }
