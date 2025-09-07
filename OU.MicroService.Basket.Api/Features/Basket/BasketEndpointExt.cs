@@ -19,7 +19,7 @@ namespace OU.MicroService.Basket.Api.Features.Basket
                 .GetBasketGroupItemEndpoint()
                 .ApplyDiscountCouponGroupItemEndpoint()
                 .RemoveDiscountCouponGroupItemEndpoint()
-                .RequireAuthorization();
+                .RequireAuthorization("Password");
 
 
 
