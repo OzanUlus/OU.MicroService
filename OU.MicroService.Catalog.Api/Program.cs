@@ -1,4 +1,3 @@
-using OU.Microservice.Bus;
 using OU.Microservice.Shared.Extensions;
 using OU.MicroService.Catalog.Api;
 using OU.MicroService.Catalog.Api.Features.Categories;
@@ -6,16 +5,16 @@ using OU.MicroService.Catalog.Api.Features.Courses;
 using OU.MicroService.Catalog.Api.Options;
 using OU.MicroService.Catalog.Api.Repositories;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.MasstransitExt(builder.Configuration);
 builder.Services.AddOptionsExt();
 builder.Services.AddDatabaseServiceExt();
 builder.Services.AddCommonServiceExt(typeof(CatalogAssembly));
-builder.Services.AddCommonMasstransitExt(builder.Configuration);
 builder.Services.AddVersioningExt();
 builder.Services.AddAuthenticationAndAuthorizationExt(builder.Configuration);
 

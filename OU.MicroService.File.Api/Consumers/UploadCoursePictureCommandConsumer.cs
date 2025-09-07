@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.FileProviders;
 using OU.Microservice.Bus.Commands;
+using OU.Microservice.Bus.Events;
 
 namespace OU.MicroService.File.Api.Consumers
 {
@@ -16,8 +17,8 @@ namespace OU.MicroService.File.Api.Consumers
 
             await System.IO.File.WriteAllBytesAsync(uploadPath, context.Message.picture);
 
-
-
+            var publishendpoint = scope.ServiceProvider.GetRequiredService<IPublishEndpoint>();
+            await publishendpoint.Publish(new CoursePictureUploadedEvent(context.Message.courseId, $"files/{newFileName}" ));
 
         }
     }
