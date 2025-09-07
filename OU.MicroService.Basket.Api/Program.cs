@@ -11,7 +11,7 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddCommonServiceExt(typeof(BasketAssembly));
-builder.Services.AddCommonMasstransitExt(builder.Configuration);
+builder.Services.MasstransitExt(builder.Configuration);
 builder.Services.AddStackExchangeRedisCache(opt => {
 
     opt.Configuration = builder.Configuration.GetConnectionString("Redis");

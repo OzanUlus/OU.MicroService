@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using MassTransit;
+using MediatR;
+using OU.Microservice.Bus.Events;
 using OU.Microservice.Order.Application.Contracts.Repositories;
 using OU.Microservice.Order.Application.Contracts.UnitOfWork;
 using OU.Microservice.Order.Domain.Entities;
@@ -8,7 +10,7 @@ using System.Net;
 
 namespace OU.Microservice.Order.Application.Features.Orders.Create
 {
-    public class CreateOrderCommandHandler(IOrderRepository orderRepository, IGenericRepository<int, Address> addressRepository, IIdentityService identityService, IUnitOfWork unitOfWork) : IRequestHandler<CreateOrderCommand, ServiceResult>
+    public class CreateOrderCommandHandler(IOrderRepository orderRepository, IGenericRepository<int, Address> addressRepository, IIdentityService identityService, IUnitOfWork unitOfWork, IPublishEndpoint publishEndpoint) : IRequestHandler<CreateOrderCommand, ServiceResult>
     {
         public async Task<ServiceResult> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
@@ -44,6 +46,8 @@ namespace OU.Microservice.Order.Application.Features.Orders.Create
 
             orderRepository.Update(order);
             await unitOfWork.CommitAsync(cancellationToken);
+
+            await publishEndpoint.Publish(new OrderCreatedEvent(order.Id, identityService.UserId), cancellationToken);
 
 
             return ServiceResult.SuccessAsNoContent();
