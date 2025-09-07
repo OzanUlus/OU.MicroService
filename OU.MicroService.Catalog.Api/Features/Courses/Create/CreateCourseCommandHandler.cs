@@ -52,7 +52,7 @@ namespace OU.MicroService.Catalog.Api.Features.Courses.Create
                   await request.Picture.CopyToAsync(stream, cancellationToken);
                   var pictureAsByteArray = stream.ToArray();
 
-                var uploadCoursePictureCommand = new UploadCoursePictureCommand(newCourse.Id, pictureAsByteArray);
+                var uploadCoursePictureCommand = new UploadCoursePictureCommand(newCourse.Id, pictureAsByteArray, request.Picture.FileName);
                 await publishEndpoint.Publish(uploadCoursePictureCommand, cancellationToken);
 
             }

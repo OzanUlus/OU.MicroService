@@ -1,12 +1,12 @@
 ﻿using MassTransit;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using OU.Microservice.Bus;
+using OU.MicroService.File.Api.Consumers;
 
-namespace OU.Microservice.Bus
+namespace OU.MicroService.File.Api
 {
     public static class MasstransitConfigurationExt
     {
-        public static IServiceCollection AddCommonMasstransitExt(this IServiceCollection services,
+        public static IServiceCollection MasstransitExt(this IServiceCollection services,
           IConfiguration configuration)
         {
             var busOptions = configuration.GetSection(nameof(BusOption)).Get<BusOption>()!;
@@ -14,6 +14,7 @@ namespace OU.Microservice.Bus
 
             services.AddMassTransit(configure =>
             {
+                configure.AddConsumer<UploadCoursePictureCommandConsumer>();
                 configure.UsingRabbitMq((ctx, cfg) =>
                 {
                     cfg.Host(new Uri($"rabbitmq://{busOptions.Address}:{busOptions.Port}"), host =>
@@ -23,10 +24,10 @@ namespace OU.Microservice.Bus
                     });
 
 
-                    cfg.ConfigureEndpoints(ctx);
+                    //cfg.ConfigureEndpoints(ctx);
 
-                    //cfg.ReceiveEndpoint("basket-microservice.create-order-event.queue",
-                    //    e => { e.ConfigureConsumer<CreateOrderEventConsumer>(context); }); kendimiz tanımladığımız queue ismi
+                    cfg.ReceiveEndpoint("file-microservice.upload-course-picture-command.queue",
+                       e => { e.ConfigureConsumer<UploadCoursePictureCommandConsumer>(ctx); });
                 });
             });
 
@@ -35,4 +36,3 @@ namespace OU.Microservice.Bus
         }
     }
 }
-
