@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using MediatR;
 using OU.Microservice.Bus.Events;
+using OU.Microservice.Order.Application.Contracts.Refit.PaymentService;
 using OU.Microservice.Order.Application.Contracts.Repositories;
 using OU.Microservice.Order.Application.Contracts.UnitOfWork;
 using OU.Microservice.Order.Domain.Entities;
@@ -10,7 +11,7 @@ using System.Net;
 
 namespace OU.Microservice.Order.Application.Features.Orders.Create
 {
-    public class CreateOrderCommandHandler(IOrderRepository orderRepository, IGenericRepository<int, Address> addressRepository, IIdentityService identityService, IUnitOfWork unitOfWork, IPublishEndpoint publishEndpoint) : IRequestHandler<CreateOrderCommand, ServiceResult>
+    public class CreateOrderCommandHandler(IOrderRepository orderRepository,IPaymentService paymentService, IGenericRepository<int, Address> addressRepository, IIdentityService identityService, IUnitOfWork unitOfWork, IPublishEndpoint publishEndpoint) : IRequestHandler<CreateOrderCommand, ServiceResult>
     {
         public async Task<ServiceResult> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
@@ -37,12 +38,14 @@ namespace OU.Microservice.Order.Application.Features.Orders.Create
             orderRepository.Add(order);
             await unitOfWork.CommitAsync(cancellationToken);
 
-            var paymentId = Guid.Empty;
+            CreatePaymentRequest paymentRequest = new(order.Code, request.Payment.CardNumber, request.Payment.CardHolderName, request.Payment.Expiration, request.Payment.Cvc, order.TotalPrice);
+            var paymentResponse = await paymentService.CreateAsync(paymentRequest);
+
+            if (paymentResponse.Status == false)
+                return ServiceResult.Error(paymentResponse.ErrorMessage!, HttpStatusCode.InternalServerError);
 
 
-            //Payment işlemleri yapılacak
-
-            order.SetPaidStatus(paymentId);
+            order.SetPaidStatus(paymentResponse.PaymentId!.Value);
 
             orderRepository.Update(order);
             await unitOfWork.CommitAsync(cancellationToken);

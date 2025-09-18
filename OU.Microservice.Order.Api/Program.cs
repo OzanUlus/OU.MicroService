@@ -1,13 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using OU.Microservice.Bus;
 using OU.Microservice.Order.Application;
+using OU.Microservice.Order.Application.Contracts.Refit;
+using OU.Microservice.Order.Application.Contracts.Refit.PaymentService;
 using OU.Microservice.Order.Application.Contracts.Repositories;
 using OU.Microservice.Order.Application.Contracts.UnitOfWork;
 using OU.Microservice.Order.Persistance;
 using OU.Microservice.Order.Persistance.Repositories;
 using OU.Microservice.Order.Persistance.UnitOfWork;
 using OU.Microservice.Shared.Extensions;
+using OU.Microservice.Shared.Options;
 using OU.MicroService.Catalog.Api.Features.Courses;
+using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +33,17 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddVersioningExt();
 builder.Services.AddAuthenticationAndAuthorizationExt(builder.Configuration);
+
+builder.Services.AddScoped<AuthenticatedHttpClientHandler>();
+
+builder.Services.AddRefitClient<IPaymentService>().ConfigureHttpClient(configure =>
+{
+    var addressUrlOption = builder.Configuration.GetSection(nameof(AddressUrlOption)).Get<AddressUrlOption>();
+
+    configure.BaseAddress = new Uri(addressUrlOption!.PaymentUrl);
+}).AddHttpMessageHandler<AuthenticatedHttpClientHandler>();
+    
+
 
 var app = builder.Build();
 

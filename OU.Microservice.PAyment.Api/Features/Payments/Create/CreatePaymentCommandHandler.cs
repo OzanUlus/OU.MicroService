@@ -6,9 +6,9 @@ using OU.Microservice.Shared.Services;
 namespace OU.Microservice.Payment.Api.Features.Payments.Create
 {
     public class CreatePaymentCommandHandler(AppDbContext appDbContext, IIdentityService identityService, IHttpContextAccessor httpContextAccessor)
-        : IRequestHandler<CreatePaymentCommand, ServiceResult<Guid>>
+        : IRequestHandler<CreatePaymentCommand, ServiceResult<CreatePaymentResponse>>
     {
-        public async Task<ServiceResult<Guid>> Handle(CreatePaymentCommand request, CancellationToken cancellationToken)
+        public async Task<ServiceResult<CreatePaymentResponse>> Handle(CreatePaymentCommand request, CancellationToken cancellationToken)
         {
             var userId = identityService.UserId;
             var userName = identityService.UserName;
@@ -21,7 +21,7 @@ namespace OU.Microservice.Payment.Api.Features.Payments.Create
 
             if (!isSuccess)
             {
-                return ServiceResult<Guid>.Error("Payment Failed", errorMessage!, System.Net.HttpStatusCode.BadRequest);
+                return ServiceResult<CreatePaymentResponse>.Error("Payment Failed", errorMessage!, System.Net.HttpStatusCode.BadRequest);
             }
 
 
@@ -32,7 +32,7 @@ namespace OU.Microservice.Payment.Api.Features.Payments.Create
             appDbContext.Payments.Add(newPayment);
             await appDbContext.SaveChangesAsync(cancellationToken);
 
-            return ServiceResult<Guid>.SuccessAsOk(newPayment.Id);
+            return ServiceResult<CreatePaymentResponse>.SuccessAsOk(new CreatePaymentResponse(newPayment.Id, true, null));
         }
 
 
