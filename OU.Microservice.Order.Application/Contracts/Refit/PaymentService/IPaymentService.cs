@@ -4,7 +4,7 @@ namespace OU.Microservice.Order.Application.Contracts.Refit.PaymentService
 {
     public interface IPaymentService
     {
-        [Post("/api/payments")]
+        [Post("/api/v1/payments")]
         Task<CreatePaymentResponse> CreateAsync(CreatePaymentRequest paymentRequest);
     }
 }
