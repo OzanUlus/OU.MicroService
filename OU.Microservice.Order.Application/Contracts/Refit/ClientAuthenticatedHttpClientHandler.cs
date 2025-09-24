@@ -8,9 +8,9 @@ namespace OU.Microservice.Order.Application.Contracts.Refit
     {
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            using (var scope = serviceProvider.CreateScope())
+            using var scope = serviceProvider.CreateScope();
 
-                var identityOptions = scope.ServiceProvider.GetRequiredService<IdentityOption>();
+             var identityOptions = scope.ServiceProvider.GetRequiredService<IdentityOption>();
             var clientSecretOptions = scope.ServiceProvider.GetRequiredService<ClientSecretOption>();
 
             var discoveryRequest = new DiscoveryDocumentRequest()
