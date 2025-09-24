@@ -35,6 +35,7 @@ builder.Services.AddVersioningExt();
 builder.Services.AddAuthenticationAndAuthorizationExt(builder.Configuration);
 
 builder.Services.AddScoped<AuthenticatedHttpClientHandler>();
+builder.Services.AddScoped<ClientAuthenticatedHttpClientHandler>();
 
 builder.Services.AddOptions<IdentityOption>()
     .BindConfiguration(nameof(IdentityOption))
@@ -57,8 +58,10 @@ builder.Services.AddRefitClient<IPaymentService>().ConfigureHttpClient(configure
     var addressUrlOption = builder.Configuration.GetSection(nameof(AddressUrlOption)).Get<AddressUrlOption>();
 
     configure.BaseAddress = new Uri(addressUrlOption!.PaymentUrl);
-}).AddHttpMessageHandler<AuthenticatedHttpClientHandler>();
-    
+}).AddHttpMessageHandler<AuthenticatedHttpClientHandler>().AddHttpMessageHandler<ClientAuthenticatedHttpClientHandler>();
+
+builder.Services.AddHostedService<OU.Microservice.Order.Application.BackgroundServices.CheckPaymentStatusOrderBackgroundService>();
+
 
 
 var app = builder.Build();

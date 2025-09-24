@@ -6,5 +6,8 @@ namespace OU.Microservice.Order.Application.Contracts.Refit.PaymentService
     {
         [Post("/api/v1/payments")]
         Task<CreatePaymentResponse> CreateAsync(CreatePaymentRequest paymentRequest);
+
+        [Get("/api/v1/payments/status/{orderCode}")]
+        Task<GetPaymentStatusResponse> GetPaymentStatus(string orderCode);
     }
 }

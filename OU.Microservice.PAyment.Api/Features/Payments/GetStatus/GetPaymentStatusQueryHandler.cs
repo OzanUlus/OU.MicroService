@@ -6,7 +6,7 @@ using OU.Microservice.Shared;
 namespace OU.Microservice.Payment.Api.Features.Payments.GetStatus
 {
     public record GetPaymentStatusRequest(string orderCode) : IRequestByServiceResult<GetPaymentStatusResponse>;
-    public record GetPaymentStatusResponse(bool isPaid);
+    public record GetPaymentStatusResponse(Guid? PaymentId, bool isPaid);
 
 
     public class GetPaymentStatusQueryHandler(AppDbContext context) : IRequestHandler<GetPaymentStatusRequest, ServiceResult<GetPaymentStatusResponse>>
@@ -17,10 +17,10 @@ namespace OU.Microservice.Payment.Api.Features.Payments.GetStatus
 
             if (payment is null)
             {
-                return ServiceResult<GetPaymentStatusResponse>.SuccessAsOk(new GetPaymentStatusResponse(false));
+                return ServiceResult<GetPaymentStatusResponse>.SuccessAsOk(new GetPaymentStatusResponse(null, false));
             }
 
-            return ServiceResult<GetPaymentStatusResponse>.SuccessAsOk(new GetPaymentStatusResponse(payment.Status == PaymentStatus.Success));
+            return ServiceResult<GetPaymentStatusResponse>.SuccessAsOk(new GetPaymentStatusResponse(payment.Id, payment.Status == PaymentStatus.Success));
 
         }
     }

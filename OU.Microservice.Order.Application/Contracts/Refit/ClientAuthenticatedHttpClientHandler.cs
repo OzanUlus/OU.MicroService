@@ -8,6 +8,12 @@ namespace OU.Microservice.Order.Application.Contracts.Refit
     {
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+
+            if(request.Headers.Authorization is not null) 
+            { 
+                return await base.SendAsync(request, cancellationToken);
+            }
+
             using var scope = serviceProvider.CreateScope();
 
              var identityOptions = scope.ServiceProvider.GetRequiredService<IdentityOption>();
@@ -20,6 +26,9 @@ namespace OU.Microservice.Order.Application.Contracts.Refit
             };
 
             var client = clientFactory.CreateClient();
+
+            client.BaseAddress = new Uri(identityOptions.Address);
+
 
             var discoveryResponse = await client.GetDiscoveryDocumentAsync(discoveryRequest, cancellationToken);
             if (discoveryResponse.IsError)
