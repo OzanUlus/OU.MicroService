@@ -36,6 +36,22 @@ builder.Services.AddAuthenticationAndAuthorizationExt(builder.Configuration);
 
 builder.Services.AddScoped<AuthenticatedHttpClientHandler>();
 
+builder.Services.AddOptions<IdentityOption>()
+    .BindConfiguration(nameof(IdentityOption))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
+builder.Services.AddSingleton<IdentityOption>(sp =>
+    sp.GetRequiredService<Microsoft.Extensions.Options.IOptions<IdentityOption>>().Value);
+
+builder.Services.AddOptions<ClientSecretOption>()
+    .BindConfiguration(nameof(ClientSecretOption))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
+builder.Services.AddSingleton<ClientSecretOption>(sp =>
+    sp.GetRequiredService<Microsoft.Extensions.Options.IOptions<ClientSecretOption>>().Value);
+
 builder.Services.AddRefitClient<IPaymentService>().ConfigureHttpClient(configure =>
 {
     var addressUrlOption = builder.Configuration.GetSection(nameof(AddressUrlOption)).Get<AddressUrlOption>();
