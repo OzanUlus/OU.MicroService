@@ -1,0 +1,54 @@
+﻿@page
+@model OU.Microservice.Web.Pages.Auth.SignUpModel
+@{
+}
+<div class="row justify-content-center mt-5">
+    <h2>Sign Up</h2>
+    <form method="post">
+        <div class="mb-3">
+            <label asp-for="SignUpViewModel.UserName" class="col-form-label"></label>
+            <input asp-for="SignUpViewModel.UserName" class="form-control" />
+            <div class="text-danger">
+                <span asp-validation-for="SignUpViewModel.UserName"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="SignUpViewModel.FirstName" class="col-form-label"></label>
+            <input asp-for="SignUpViewModel.FirstName" class="form-control" />
+            <div class="text-danger">
+                <span asp-validation-for="SignUpViewModel.FirstName"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="SignUpViewModel.LastName" class="col-form-label"></label>
+            <input asp-for="SignUpViewModel.LastName" class="form-control" />
+            <div class="text-danger">
+                <span asp-validation-for="SignUpViewModel.LastName"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="SignUpViewModel.Email" class="col-form-label"></label>
+            <input asp-for="SignUpViewModel.Email" class="form-control" />
+            <div class="text-danger">
+                <span asp-validation-for="SignUpViewModel.Email"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="SignUpViewModel.Password" class="col-form-label"></label>
+            <input asp-for="SignUpViewModel.Password" class="form-control" />
+            <div class="text-danger">
+                <span asp-validation-for="SignUpViewModel.Password"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label asp-for="SignUpViewModel.PasswordConfirm" class="col-form-label"></label>
+            <input asp-for="SignUpViewModel.PasswordConfirm" class="form-control" />
+            <div class="text-danger">
+                <span asp-validation-for="SignUpViewModel.PasswordConfirm"></span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-outline-primary">Sign Up</button>
+        </div>
+    </form>
+</div>
