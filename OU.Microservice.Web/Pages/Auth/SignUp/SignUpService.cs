@@ -9,7 +9,7 @@ namespace OU.Microservice.Web.Pages.Auth.SignUp
         public async Task<ServiceResult> CreateAccount(SignUpViewModel model)
         {
             var token = await GetClientCredentialTokenAsAdmin();
-            var address = $"{identityOption.Admin.Address}/users";
+            var address = $"{identityOption.BaseAddress}/admin/realms/microserviceTenant/users";
             client.SetBearerToken(token);
             var userCreateRequest = CreateUserCreateRequest(model);
             var response = await client.PostAsJsonAsync(address, userCreateRequest);
@@ -33,16 +33,16 @@ namespace OU.Microservice.Web.Pages.Auth.SignUp
                 Credentials: [new Credential("password", model.Password, Temporary: false)]
                 );
         }
-        public async Task<string> GetClientCredentialTokenAsAdmin()
+        private async Task<string> GetClientCredentialTokenAsAdmin()
         {
             var discoveryRequest = new DiscoveryDocumentRequest()
             {
-                Address = identityOption.Admin.Address,
+                Address = identityOption.Address,
                 Policy = { RequireHttps = false }
             };
 
 
-            client.BaseAddress = new Uri(identityOption.Admin.Address);
+            client.BaseAddress = new Uri(identityOption.Address);
 
 
             var discoveryResponse = await client.GetDiscoveryDocumentAsync();

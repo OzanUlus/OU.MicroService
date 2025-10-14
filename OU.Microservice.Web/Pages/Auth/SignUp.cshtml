@@ -35,14 +35,14 @@
         </div>
         <div class="mb-3">
             <label asp-for="SignUpViewModel.Password" class="col-form-label"></label>
-            <input asp-for="SignUpViewModel.Password" class="form-control" />
+            <input asp-for="SignUpViewModel.Password" class="form-control" type="password" />
             <div class="text-danger">
                 <span asp-validation-for="SignUpViewModel.Password"></span>
             </div>
         </div>
         <div class="mb-3">
             <label asp-for="SignUpViewModel.PasswordConfirm" class="col-form-label"></label>
-            <input asp-for="SignUpViewModel.PasswordConfirm" class="form-control" />
+            <input asp-for="SignUpViewModel.PasswordConfirm" class="form-control" type="password" />
             <div class="text-danger">
                 <span asp-validation-for="SignUpViewModel.PasswordConfirm"></span>
             </div>
