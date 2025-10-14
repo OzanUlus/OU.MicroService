@@ -4,14 +4,6 @@ using OU.Microservice.Web.Services;
 
 namespace OU.Microservice.Web.Pages.Auth.SignUp
 {
-    public record UserCreateRequest(
-        string Username,
-        bool Enabled,
-        string FirstName,
-        string LastName,
-        string Email,
-        List<Credential> Credentials);
-    public record Credential(string Type, string Value, bool Temporary);
     public class SignUpService(IdentityOption identityOption, HttpClient client, ILogger<SignUpService> logger)
     {
         public async Task<ServiceResult> CreateAccount(SignUpViewModel model)
