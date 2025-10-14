@@ -6,6 +6,7 @@ namespace OU.Microservice.Web.Pages.Auth.SignUp
 {
     public class SignUpService(IdentityOption identityOption, HttpClient client, ILogger<SignUpService> logger)
     {
+        public record KeycloakErrorResponse(string ErrorMessage);
         public async Task<ServiceResult> CreateAccount(SignUpViewModel model)
         {
             var token = await GetClientCredentialTokenAsAdmin();
@@ -15,6 +16,11 @@ namespace OU.Microservice.Web.Pages.Auth.SignUp
             var response = await client.PostAsJsonAsync(address, userCreateRequest);
             if (!response.IsSuccessStatusCode)
             {
+                if(response.StatusCode != System.Net.HttpStatusCode.InternalServerError) 
+                {
+                  var keycloakErrorResponse = await response.Content.ReadFromJsonAsync<KeycloakErrorResponse>();
+                    return ServiceResult.Error(keycloakErrorResponse.ErrorMessage);
+                }
                 var error = await response.Content.ReadAsStringAsync();
                 logger.LogError(error);
                 return ServiceResult.Error("Create account failed. Please try again later.");

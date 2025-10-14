@@ -6,22 +6,27 @@ namespace OU.Microservice.Web.Pages.Auth
 {
     public class SignUpModel(SignUpService signUpService) : PageModel
     {
-       [BindProperty] public SignUpViewModel SignUpViewModel { get; set; } = SignUpViewModel.GetExampleModel;
+        [BindProperty] public SignUpViewModel SignUpViewModel { get; set; } = SignUpViewModel.GetExampleModel;
         public void OnGet()
         {
         }
 
-        public async Task<IActionResult> OnPostAsync() 
+        public async Task<IActionResult> OnPostAsync()
         {
-           var result = await signUpService.CreateAccount(SignUpViewModel);
+            var result = await signUpService.CreateAccount(SignUpViewModel);
             if (result.IsFail)
             {
+                ModelState.AddModelError(string.Empty, result.Fail.Title);
+                if (!string.IsNullOrEmpty(result.Fail.Detail))
+                {
+                    ModelState.AddModelError(string.Empty, result.Fail.Detail);
+                }
                 return Page();
             }
-            else
-            {
+          
+            
                 return RedirectToPage("/Index");
-            }
+            
         }
     }
 }

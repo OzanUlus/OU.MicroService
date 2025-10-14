@@ -4,6 +4,9 @@
 }
 <div class="row justify-content-center mt-5">
     <h2>Sign Up</h2>
+    <div asp-validation-summary="ModelOnly">
+
+    </div>
     <form method="post">
         <div class="mb-3">
             <label asp-for="SignUpViewModel.UserName" class="col-form-label"></label>
