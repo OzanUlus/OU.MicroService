@@ -3,9 +3,42 @@ using OU.Microservice.Web.Options;
 
 namespace OU.Microservice.Web.Pages.Auth.SignUp
 {
-    public class SignUpService(IdentityOption identityOption, HttpClient client)
+    public record UserCreateRequest(
+        string Username,
+        bool Enabled,
+        string FirstName,
+        string LastName,
+        string Email,
+        List<Credential> Credentials);
+    public record Credential(string Type, string Value, bool Temporary);
+    public class SignUpService(IdentityOption identityOption, HttpClient client, ILogger<SignUpService> logger)
     {
-        public async Task<string> GetClientCredentialTokenAsAdmin() 
+        public async Task CreateAccount(SignUpViewModel model)
+        {
+            var token = await GetClientCredentialTokenAsAdmin();
+            var address = $"{identityOption.Admin.Address}/users";
+            client.SetBearerToken(token);
+            var userCreateRequest = CreateUserCreateRequest(model);
+            var response = await client.PostAsJsonAsync(address, userCreateRequest);
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                logger.LogError(error);
+            }
+        }
+
+        private static UserCreateRequest CreateUserCreateRequest(SignUpViewModel model)
+        {
+            return new UserCreateRequest(
+                model.UserName,
+                Enabled: true,
+                model.FirstName,
+                model.LastName,
+                model.Email,
+                Credentials: [new Credential("password", model.Password, Temporary: false)]
+                );
+        }
+        public async Task<string> GetClientCredentialTokenAsAdmin()
         {
             var discoveryRequest = new DiscoveryDocumentRequest()
             {
