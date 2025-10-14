@@ -13,6 +13,10 @@ namespace OU.Microservice.Web.Pages.Auth
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (!ModelState.IsValid) 
+            { 
+                return Page();
+            }
             var result = await signUpService.CreateAccount(SignUpViewModel);
             if (result.IsFail)
             {
