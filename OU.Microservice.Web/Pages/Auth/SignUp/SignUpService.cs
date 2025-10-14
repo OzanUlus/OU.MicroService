@@ -1,5 +1,6 @@
 ﻿using Duende.IdentityModel.Client;
 using OU.Microservice.Web.Options;
+using OU.Microservice.Web.Services;
 
 namespace OU.Microservice.Web.Pages.Auth.SignUp
 {
@@ -13,7 +14,7 @@ namespace OU.Microservice.Web.Pages.Auth.SignUp
     public record Credential(string Type, string Value, bool Temporary);
     public class SignUpService(IdentityOption identityOption, HttpClient client, ILogger<SignUpService> logger)
     {
-        public async Task CreateAccount(SignUpViewModel model)
+        public async Task<ServiceResult> CreateAccount(SignUpViewModel model)
         {
             var token = await GetClientCredentialTokenAsAdmin();
             var address = $"{identityOption.Admin.Address}/users";
@@ -24,7 +25,9 @@ namespace OU.Microservice.Web.Pages.Auth.SignUp
             {
                 var error = await response.Content.ReadAsStringAsync();
                 logger.LogError(error);
+                return ServiceResult.Error("Create account failed. Please try again later.");
             }
+            return ServiceResult.Success();
         }
 
         private static UserCreateRequest CreateUserCreateRequest(SignUpViewModel model)
