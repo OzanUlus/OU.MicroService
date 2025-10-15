@@ -1,24 +1,42 @@
 ﻿using Duende.IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using OU.Microservice.Web.Options;
 using OU.Microservice.Web.Services;
+using System.Security.Claims;
 
 namespace OU.Microservice.Web.Pages.Auth.SignIn
 {
-    public class SignInService(IdentityOption identityOption, HttpClient client, ILogger<SignInService> logger)
+    public class SignInService(
+        IHttpContextAccessor contextAccessor,
+        TokenService tokenService,
+        IdentityOption identityOption,
+        HttpClient client,
+        ILogger<SignInService> logger)
     {
-        public async Task<ServiceResult> SignIn(SignInViewModel signInViewModel)
+        public async Task<ServiceResult> AuthenticateAsync(SignInViewModel signInViewModel)
         {
-            
-            
-                var tokenResponse = await GetAccessToken(signInViewModel);
-                if (tokenResponse.IsError)
-                {
-                   
-                    return ServiceResult<string>.Error(tokenResponse.Error!, tokenResponse.ErrorDescription!);
-                }
-                return ServiceResult.Success();
-            
-           
+
+            var tokenResponse = await GetAccessToken(signInViewModel);
+            if (tokenResponse.IsError)
+            {
+
+                return ServiceResult<string>.Error(tokenResponse.Error!, tokenResponse.ErrorDescription!);
+            }
+
+            var userClaims = tokenService.ExtractClaims(tokenResponse.AccessToken!);
+            var authenticationProperties = tokenService.CreateAuthenticationProperties(tokenResponse);
+
+            var claimsIdentity = new ClaimsIdentity(userClaims, CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+
+            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+            await contextAccessor.HttpContext!.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, authenticationProperties);
+
+
+            return ServiceResult.Success();
+
+
         }
         private async Task<TokenResponse> GetAccessToken(SignInViewModel signInViewModel)
         {
@@ -42,13 +60,13 @@ namespace OU.Microservice.Web.Pages.Auth.SignIn
             var tokenResponse = await client.RequestPasswordTokenAsync(new PasswordTokenRequest
             {
                 Address = discoveryResponse.TokenEndpoint,
-                ClientId = identityOption.Admin.ClientId,
-                ClientSecret = identityOption.Admin.ClientSecret,
+                ClientId = identityOption.Web.ClientId,
+                ClientSecret = identityOption.Web.ClientSecret,
                 UserName = signInViewModel.Email,
                 Password = signInViewModel.Password,
-                
+
             });
-           
+
             return tokenResponse;
         }
     }
