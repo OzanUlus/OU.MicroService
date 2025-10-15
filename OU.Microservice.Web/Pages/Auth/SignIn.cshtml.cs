@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OU.Microservice.Web.Pages.Auth.SignIn;
@@ -23,6 +25,12 @@ namespace OU.Microservice.Web.Pages.Auth
                 ModelState.AddModelError(string.Empty, result.Fail.Detail);
                 return Page();
             }
+            return RedirectToPage("/Index");
+        }
+
+        public async Task<IActionResult> OnGetSignOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToPage("/Index");
         }
     }
