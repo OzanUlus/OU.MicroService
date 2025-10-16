@@ -22,14 +22,14 @@ namespace OU.Microservice.Web.Services.Refit
 
 
         [Post("/api/v1/courses")]
-        Task<ApiResponse<ServiceResult>> CreateCourseAsync(CreateCourseRequest request);
+        Task<ApiResponse<object>> CreateCourseAsync(CreateCourseRequest request);
 
 
         [Put("/api/v1/courses")]
-        Task<ApiResponse<ServiceResult>> UpdateCourseAsync(UpdateCourseRequest request);
+        Task<ApiResponse<object>> UpdateCourseAsync(UpdateCourseRequest request);
 
 
         [Delete("/api/v1/courses/{id}")]
-        Task<ApiResponse<ServiceResult>> DeleteCourseAsync(Guid id);
+        Task<ApiResponse<object>> DeleteCourseAsync(Guid id);
     }
 }

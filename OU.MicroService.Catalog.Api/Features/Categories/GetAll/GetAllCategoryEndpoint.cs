@@ -29,7 +29,7 @@ namespace OU.MicroService.Catalog.Api.Features.Categories.GetAll
         {
 
             group.MapGet("/", async (IMediator mediator) => (await mediator.Send(new GetAllCategoryQuery())).ToGenericResult()).WithName("GetAllCategory")
-                .MapToApiVersion(1, 0);
+                .MapToApiVersion(1, 0).RequireAuthorization(policyNames: "ClientCredential");
 
             return group;
 

@@ -25,7 +25,9 @@ namespace OU.Microservice.Shared.Extensions
                    ValidateIssuerSigningKey = true,
                    ValidateLifetime = true,
                    ValidateIssuer = true,
-            
+                   RoleClaimType = ClaimTypes.Role,
+                   NameClaimType = ClaimTypes.NameIdentifier
+
                 };
             }).AddJwtBearer("ClientCredentialSchema", options =>
             {
@@ -47,7 +49,7 @@ namespace OU.Microservice.Shared.Extensions
                 {
                     policy.AuthenticationSchemes.Add("ClientCredentialSchema");
                     policy.RequireAuthenticatedUser();
-                    policy.RequireClaim("client_id");
+                   
                 });
 
                 options.AddPolicy("Password", policy =>
