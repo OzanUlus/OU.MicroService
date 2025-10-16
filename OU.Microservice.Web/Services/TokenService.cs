@@ -1,12 +1,13 @@
 ﻿using Duende.IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using OU.Microservice.Web.Options;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace OU.Microservice.Web.Services
 {
-    public class TokenService
+    public class TokenService(HttpClient client, IdentityOption identityOption)
     {
         public List<Claim> ExtractClaims(string accessToken)
         {
@@ -43,6 +44,36 @@ namespace OU.Microservice.Web.Services
             return authenticationProperties;
 
 
+        }
+
+        public async Task<TokenResponse> GetTokensByRefreshToken(string refreshToken) 
+        {
+            var discoveryRequest = new DiscoveryDocumentRequest()
+            {
+                Address = identityOption.Address,
+                Policy = { RequireHttps = false }
+            };
+
+
+            client.BaseAddress = new Uri(identityOption.Address);
+
+
+            var discoveryResponse = await client.GetDiscoveryDocumentAsync();
+
+            if (discoveryResponse.IsError)
+            {
+                throw new Exception(discoveryResponse.Error);
+            }
+
+            var tokenResponse = await client.RequestRefreshTokenAsync(new RefreshTokenRequest
+            {
+                Address = discoveryResponse.TokenEndpoint,
+                ClientId = identityOption.Web.ClientId,
+                ClientSecret = identityOption.Web.ClientSecret,
+                RefreshToken = refreshToken
+            });
+
+            return tokenResponse;
         }
     }
 }
