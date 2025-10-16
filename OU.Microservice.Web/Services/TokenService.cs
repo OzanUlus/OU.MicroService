@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using OU.Microservice.Web.Options;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http;
 using System.Security.Claims;
 
 namespace OU.Microservice.Web.Services
@@ -72,6 +73,36 @@ namespace OU.Microservice.Web.Services
                 ClientSecret = identityOption.Web.ClientSecret,
                 RefreshToken = refreshToken
             });
+
+            return tokenResponse;
+        }
+
+        public async Task<TokenResponse> GetClientAccessToken()
+        {
+            var discoveryRequest = new DiscoveryDocumentRequest
+            {
+                Address = identityOption.Address,
+                Policy = { RequireHttps = false }
+            };
+
+            
+            client.BaseAddress = new Uri(identityOption.Address);
+            var discoveryResponse = await client.GetDiscoveryDocumentAsync();
+
+
+            if (discoveryResponse.IsError)
+                throw new Exception($"Discovery document request failed: {discoveryResponse.Error}");
+
+
+            var tokenResponse = await client.RequestClientCredentialsTokenAsync(
+                new ClientCredentialsTokenRequest
+                {
+                    Address = discoveryResponse.TokenEndpoint,
+                    ClientId = identityOption.Web.ClientId,
+                    ClientSecret = identityOption.Web.ClientSecret
+                });
+
+            if (tokenResponse.IsError) throw new Exception($"Token request failed: {tokenResponse.Error}");
 
             return tokenResponse;
         }

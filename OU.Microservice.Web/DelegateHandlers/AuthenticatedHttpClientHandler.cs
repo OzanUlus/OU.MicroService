@@ -5,14 +5,14 @@ using OU.Microservice.Web.Services;
 
 namespace OU.Microservice.Web.DelegateHandlers
 {
-    public class AuthenticationHttpClientHandler(IHttpContextAccessor httpContextAccessor, TokenService tokenService) : DelegatingHandler
+    public class AuthenticatedHttpClientHandler(IHttpContextAccessor httpContextAccessor, TokenService tokenService) : DelegatingHandler
     {
         protected override async  Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if(httpContextAccessor.HttpContext is null) return await base.SendAsync(request, cancellationToken);
 
-            var user = httpContextAccessor.HttpContext.User;
-            if(!user.Identity!.IsAuthenticated) return await base.SendAsync(request, cancellationToken);
+            
+            if(!httpContextAccessor.HttpContext!.User.Identity!.IsAuthenticated) return await base.SendAsync(request, cancellationToken);
 
             var accesToken = await httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
 
