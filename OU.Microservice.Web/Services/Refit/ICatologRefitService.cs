@@ -12,8 +12,8 @@ namespace OU.Microservice.Web.Services.Refit
         //Task<ApiResponse<CourseDto>> GetCourse(Guid id);
 
 
-        //[Get("/api/v1/categories")]
-        //Task<ApiResponse<List<CategoryDto>>> GetCategoriesAsync();
+        [Get("/api/v1/categories")]
+        Task<ApiResponse<List<CategoryDto>>> GetCategoriesAsync();
 
 
         //[Get("/api/v1/courses/user/{userId}")]
