@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace OU.Microservice.Web.Services
 {
-    public class TokenService(HttpClient client, IdentityOption identityOption)
+    public class TokenService(IHttpClientFactory httpClientFactory , IdentityOption identityOption)
     {
         public List<Claim> ExtractClaims(string accessToken)
         {
@@ -55,7 +55,7 @@ namespace OU.Microservice.Web.Services
                 Policy = { RequireHttps = false }
             };
 
-
+            var client = httpClientFactory.CreateClient("GetTokensByRefreshToken");
             client.BaseAddress = new Uri(identityOption.Address);
 
 
@@ -85,7 +85,7 @@ namespace OU.Microservice.Web.Services
                 Policy = { RequireHttps = false }
             };
 
-            
+            var client = httpClientFactory.CreateClient("GetClientAccessToken");  
             client.BaseAddress = new Uri(identityOption.Address);
             var discoveryResponse = await client.GetDiscoveryDocumentAsync();
 

@@ -7,7 +7,7 @@ namespace OU.Microservice.Web.Services
 {
     public class CatalogService(
     ICatologRefitService catalogRefitService,
-    //UserService userService,
+    UserService userService,
     ILogger<CatalogService> logger)
     {
         //public async Task<ServiceResult<List<CourseViewModel>>> GetAllCoursesAsync()
@@ -98,46 +98,46 @@ namespace OU.Microservice.Web.Services
         }
 
 
-        //public async Task<ServiceResult<List<CourseViewModel>>> GetCoursesByUserId()
-        //{
-        //    var course = await catalogRefitService.GetCoursesByUserId(userService.UserId);
+        public async Task<ServiceResult<List<CourseViewModel>>> GetCoursesByUserId()
+        {
+            var course = await catalogRefitService.GetCoursesByUserId(userService.UserId);
 
-        //    if (!course.IsSuccessStatusCode)
-        //    {
-        //        var problemDetails = JsonSerializer.Deserialize<ProblemDetails>(course.Error.Content!);
-        //        logger.LogError("Error occurred while fetching courses by user id");
-        //        return ServiceResult<List<CourseViewModel>>.Error("Fail to retrieve courses. Please try again later");
-        //    }
+            if (!course.IsSuccessStatusCode)
+            {
+                var problemDetails = JsonSerializer.Deserialize<ProblemDetails>(course.Error.Content!);
+                logger.LogError("Error occurred while fetching courses by user id");
+                return ServiceResult<List<CourseViewModel>>.Error("Fail to retrieve courses. Please try again later");
+            }
 
-        //    var courses = course!.Content!
-        //        .Select(c => new CourseViewModel(
-        //            c.Id,
-        //            c.Name,
-        //            c.Description,
-        //            c.Price,
-        //            c.ImageUrl,
-        //            c.Created.ToLongDateString(),
-        //            c.Feature.EducatorFullName,
-        //            c.Category.Name,
-        //            c.Feature.Duration,
-        //            c.Feature.Rating
-        //        ))
-        //        .ToList();
+            var courses = course!.Content!
+                .Select(c => new CourseViewModel(
+                    c.Id,
+                    c.Name,
+                    c.Description,
+                    c.Price,
+                    c.ImageUrl,
+                    c.Created.ToLongDateString(),
+                    c.Feature.EducatorFullName,
+                    c.Category.Name,
+                    c.Feature.Duration,
+                    c.Feature.Rating
+                ))
+                .ToList();
 
-        //    return ServiceResult<List<CourseViewModel>>.Success(courses);
-        //}
+            return ServiceResult<List<CourseViewModel>>.Success(courses);
+        }
 
-        //public async Task<ServiceResult> DeleteAsync(Guid CourseId)
-        //{
-        //    var response = await catalogRefitService.DeleteCourseAsync(CourseId);
-        //    if (!response.IsSuccessStatusCode)
-        //    {
-        //        var problemDetails = JsonSerializer.Deserialize<ProblemDetails>(response.Error.Content!);
-        //        logger.LogError("Error occurred while deleting course");
-        //        return ServiceResult.Error("Fail to delete course. Please try again later");
-        //    }
+        public async Task<ServiceResult> DeleteAsync(Guid CourseId)
+        {
+            var response = await catalogRefitService.DeleteCourseAsync(CourseId);
+            if (!response.IsSuccessStatusCode)
+            {
+                var problemDetails = JsonSerializer.Deserialize<ProblemDetails>(response.Error.Content!);
+                logger.LogError("Error occurred while deleting course");
+                return ServiceResult.Error("Fail to delete course. Please try again later");
+            }
 
-        //    return ServiceResult.Success();
-        //}
+            return ServiceResult.Success();
+        }
     }
 }

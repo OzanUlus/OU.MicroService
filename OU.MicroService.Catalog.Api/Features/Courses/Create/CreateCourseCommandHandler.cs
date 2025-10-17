@@ -4,12 +4,13 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using OU.Microservice.Bus.Commands;
 using OU.Microservice.Shared;
+using OU.Microservice.Shared.Services;
 using OU.MicroService.Catalog.Api.Repositories;
 using System.Net;
 
 namespace OU.MicroService.Catalog.Api.Features.Courses.Create
 {
-    public class CreateCourseCommandHandler(AppDbContext context, IPublishEndpoint publishEndpoint) : IRequestHandler<CreateCourseCommand, ServiceResult<Guid>>
+    public class CreateCourseCommandHandler(AppDbContext context, IPublishEndpoint publishEndpoint, IIdentityService ıdentityService) : IRequestHandler<CreateCourseCommand, ServiceResult<Guid>>
     {
         public async Task<ServiceResult<Guid>> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
         {
@@ -34,6 +35,7 @@ namespace OU.MicroService.Catalog.Api.Features.Courses.Create
 
             var newCourse = request.Adapt<Course>();
             newCourse.Created = DateTime.Now;
+            newCourse.UserId = ıdentityService.UserId;
             newCourse.Id = Guid.CreateVersion7(); // index performance
             newCourse.Feature = new Feature()
             {
