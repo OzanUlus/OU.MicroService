@@ -6,7 +6,7 @@ using OU.Microservice.Web.Services;
 
 namespace OU.Microservice.Web.Pages.Instructor
 {
-    //[Authorize(Roles = "instructor")]
+    [Authorize(Roles = "instructor")]
     public class CreateCourseModel(CatalogService catalogService) : PageModel
     {
         [BindProperty] public CreateCourseViewModel ViewModel { get; set; } = CreateCourseViewModel.Empty;
