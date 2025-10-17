@@ -35,7 +35,7 @@ namespace OU.MicroService.Catalog.Api.Features.Courses.Delete
                     async (IMediator mediator, Guid id) =>
                         (await mediator.Send(new DeleteCourseCommand(id))).ToGenericResultToResult())
                 .WithName("DeleteCourse")
-                .MapToApiVersion(1, 0);
+                .MapToApiVersion(1, 0).RequireAuthorization(policyNames: "InstructorPolicy");
 
             return group;
         }

@@ -60,6 +60,14 @@ namespace OU.Microservice.Shared.Extensions
                     policy.RequireClaim(ClaimTypes.Email);
 
                 });
+
+                options.AddPolicy("InstructorPolicy", policy =>
+                {
+                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim(ClaimTypes.Email);
+                    policy.RequireRole(ClaimTypes.Role, "instructor");
+                });
             });
           
 

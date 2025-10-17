@@ -24,16 +24,16 @@ namespace OU.Microservice.Web.Pages.Instructor
             ViewModel.SetCategoryDropdownList(categoriesResult.Data!);
         }
 
-        //public async Task<IActionResult> OnPostAsync()
-        //{
-        //    var result = await catalogService.CreateCourseAsync(ViewModel);
+        public async Task<IActionResult> OnPostAsync()
+        {
+            var result = await catalogService.CreateCourseAsync(ViewModel);
 
-        //    if (!result.IsSuccess)
-        //    {
-        //        //TODO : Show error
-        //    }
+            if (!result.IsSuccess)
+            {
+                //TODO : Show error
+            }
 
-        //    return RedirectToPage("Courses");
-        //}
+            return RedirectToPage("Courses");
+        }
     }
 }

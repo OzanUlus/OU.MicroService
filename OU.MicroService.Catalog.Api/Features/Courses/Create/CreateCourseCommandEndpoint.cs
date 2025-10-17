@@ -18,7 +18,8 @@ namespace OU.MicroService.Catalog.Api.Features.Courses.Create
                 .Produces(StatusCodes.Status404NotFound)
                 .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
                 .Produces<ProblemDetails>(StatusCodes.Status500InternalServerError)
-                .AddEndpointFilter<ValidationFilter<CreateCourseCommand>>().DisableAntiforgery();
+                .AddEndpointFilter<ValidationFilter<CreateCourseCommand>>().DisableAntiforgery()
+                .RequireAuthorization(policyNames: "InstructorPolicy");
 
             return group;
         }

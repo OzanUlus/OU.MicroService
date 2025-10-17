@@ -68,34 +68,34 @@ namespace OU.Microservice.Web.Services
             return ServiceResult<List<CategoryViewModel>>.Success(categories);
         }
 
-        //public async Task<ServiceResult> CreateCourseAsync(CreateCourseViewModel model)
-        //{
-        //    StreamPart? pictureStreamPart = null;
-        //    await using var stream = model.PictureFormFile?.OpenReadStream();
+        public async Task<ServiceResult> CreateCourseAsync(CreateCourseViewModel model)
+        {
+            StreamPart? pictureStreamPart = null;
+            await using var stream = model.PictureFormFile?.OpenReadStream();
 
-        //    if (model.PictureFormFile is not null && model.PictureFormFile.Length > 0)
-        //        pictureStreamPart =
-        //            new StreamPart(stream!, model.PictureFormFile.FileName, model.PictureFormFile.ContentType);
-
-
-        //    var response = await catalogRefitService.CreateCourseAsync(
-        //        model.Name,
-        //        model.Description,
-        //        model.Price,
-        //        pictureStreamPart,
-        //        model.CategoryId.ToString()!
-        //    );
-
-        //    if (!response.IsSuccessStatusCode)
-        //    {
-        //        var problemDetails = JsonSerializer.Deserialize<ProblemDetails>(response.Error.Content!);
-        //        logger.LogError("Error occurred while creating course");
-        //        return ServiceResult.Error("Fail to create course. Please try again later");
-        //    }
+            if (model.PictureFormFile is not null && model.PictureFormFile.Length > 0)
+                pictureStreamPart =
+                    new StreamPart(stream!, model.PictureFormFile.FileName, model.PictureFormFile.ContentType);
 
 
-        //    return ServiceResult.Success();
-        //}
+            var response = await catalogRefitService.CreateCourseAsync(
+                model.Name,
+                model.Description,
+                model.Price,
+                pictureStreamPart,
+                model.CategoryId.ToString()!
+            );
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var problemDetails = JsonSerializer.Deserialize<ProblemDetails>(response.Error.Content!);
+                logger.LogError("Error occurred while creating course");
+                return ServiceResult.Error("Fail to create course. Please try again later");
+            }
+
+
+            return ServiceResult.Success();
+        }
 
 
         //public async Task<ServiceResult<List<CourseViewModel>>> GetCoursesByUserId()
