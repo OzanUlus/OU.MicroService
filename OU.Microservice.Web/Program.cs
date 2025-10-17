@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using OU.Microservice.Web.DelegateHandlers;
+using OU.Microservice.Web.ExceptionHandlers;
 using OU.Microservice.Web.Extensions;
 using OU.Microservice.Web.Options;
 using OU.Microservice.Web.Pages.Auth.SignIn;
@@ -22,6 +23,7 @@ builder.Services.AddScoped<CatalogService>();
 builder.Services.AddScoped<AuthenticatedHttpClientHandler>();
 builder.Services.AddScoped<ClientAuthenticatedHttpClientHandler>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddExceptionHandler<UnauthorizedAccessExceptionHandler>();
 
 builder.Services.AddRefitClient<ICatologRefitService>().ConfigureHttpClient(configure =>
 {
